@@ -1,3 +1,14 @@
 <h1>Some content!</h1>
-<p>The parameters <b>{{ firstname }}</b> and <b>{{ lastname }}</b> 
+<p>The parameters <b>{{ firstName }}</b> and <b>{{ lastName }}</b>
    have been magically added!</p>
+
+{{#if otherNames}}
+<section>
+    <p>We can also iterate over arrays:</p>
+    <ul>
+        {{#each otherNames}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+</section>
+{{/if}}
