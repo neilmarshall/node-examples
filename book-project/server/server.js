@@ -17,7 +17,28 @@ mongoose.connect(
 const {Book} = require(`${__dirname}/models/books`);
 const {Store} = require(`${__dirname}/models/stores`);
 
+//GET
+app.get('/api/stores', (req, res) => {
+    Store.find()
+         .then(doc => res.status(200).send(doc))
+         .catch(err => res.status(400).send(err));
+});
+
 // POST
+app.post('/api/add/books', (req, res) => {
+    const book = new Book({
+        name: req.body.name,
+        author: req.body.author,
+        pages: req.body.pages,
+        price: req.body.price,
+        stores: req.body.stores,
+    });
+
+    book.save()
+        .then(doc => res.status(201).send(doc))
+        .catch(err => res.status(400).send(err));
+});
+
 app.post('/api/add/store', (req, res) => {
     const store = new Store({
         name: req.body.name,
@@ -26,7 +47,7 @@ app.post('/api/add/store', (req, res) => {
     });
 
     store.save()
-         .then(doc => res.status(200).send(doc))
+         .then(doc => res.status(201).send(doc))
          .catch(err => res.status(400).send(err));
 });
 

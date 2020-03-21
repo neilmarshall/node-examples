@@ -52,9 +52,46 @@
             </div>
 
         </form>
+
     </div>
 
-   
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:3000/api/stores",
+            success: (data, status) => {
+                data.map(item => {
+                    $("#stores").append($('<option>', {
+                        value: item.name,
+                        text: item.name
+                    }));
+                });
+            },
+            error: err => alert("Something went wrong :(")
+        });
+
+        $("#books_form").submit(e => {
+            e.preventDefault();
+
+            let name = $('#name').val();
+            let author = $('#author').val();
+            let pages = $('#pages').val();
+            let price = $('#price').val();
+            let stores = $('#stores').val();
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/api/add/books",
+                data: JSON.stringify({name, author, pages, price, stores}),
+                contentType: "application/json",
+                success: (data, status) => {
+                    $("#books_form")[0].reset();
+                    alert("Thank You!!!");
+                },
+                error: err => alert("Something went wrong :(")
+            });
+        });
+    </script>
 
 </body>
 </html>
