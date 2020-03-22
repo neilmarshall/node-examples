@@ -77,6 +77,13 @@ app.patch('/api/add/books/:id', (req, res) => {
         .catch(err => res.status(400).send(err));
 });
 
+// DELETE
+app.delete('/api/delete/books/:id', (req, res) => {
+    Book.findByIdAndDelete(req.params.id)
+        .then(doc => res.status(204).send(doc))
+        .catch(err => res.status(400).send(err));
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`started listening on post ${port}`);
