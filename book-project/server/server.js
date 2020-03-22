@@ -24,6 +24,16 @@ app.get('/api/stores', (req, res) => {
          .catch(err => res.status(400).send(err));
 });
 
+app.get('/api/books', (req, res) => {
+    const limit = req.query.limit ? parseInt(req.query.limit) : 0;
+
+    Book.find()
+        .sort({name: 'asc'})
+        .limit(limit)
+        .then(doc => res.status(200).send(doc))
+        .catch(err => res.status(400).send(err));
+});
+
 // POST
 app.post('/api/add/books', (req, res) => {
     const book = new Book({
