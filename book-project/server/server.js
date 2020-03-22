@@ -34,6 +34,12 @@ app.get('/api/books', (req, res) => {
         .catch(err => res.status(400).send(err));
 });
 
+app.get('/api/books/:id', (req, res) => {
+    Book.findById(req.params.id)
+        .then(doc => res.status(200).send(doc))
+        .catch(err => res.status(400).send(err));
+});
+
 // POST
 app.post('/api/add/books', (req, res) => {
     const book = new Book({
@@ -59,6 +65,16 @@ app.post('/api/add/store', (req, res) => {
     store.save()
          .then(doc => res.status(201).send(doc))
          .catch(err => res.status(400).send(err));
+});
+
+// PATCH
+app.patch('/api/add/books/:id', (req, res) => {
+    Book.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            {new: true})
+        .then(doc => res.status(204).send(doc))
+        .catch(err => res.status(400).send(err));
 });
 
 const port = process.env.PORT || 3000;
